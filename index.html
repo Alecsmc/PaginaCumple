@@ -276,32 +276,7 @@
   justify-content: center;
 }
 
-/* Ejemplo completo de media queries */
-@media (max-width: 360px) {
-  #birthday-title { font-size: 2rem; padding: .75rem 1.5rem; }
-  #scene { max-width: 100%; aspect-ratio: 1.5/1; padding: 0 .5rem; }
-  #touch-controls button { font-size:1.5rem; min-width:48px; min-height:48px; }
-}
 
-/* Flexbox centrar */
-body, #scene {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-
-/* Canvas full-width responsive */
-#gameCanvas { width:100%; height:auto; }
-
-/* Asegurar área táctil mínima */
-#touch-controls button {
-  min-width:48px;
-  min-height:48px;
-  padding: .5rem 1rem;
-}
 
 </style>
 </head>
@@ -322,7 +297,7 @@ body, #scene {
     <div class="flag" style="--clr:#4BC0C0"></div>
     <div class="flag" style="--clr:#9966FF"></div>
   </div>
-  <h1 id="birthday-title">🎉 ¡Sorpresa de Cumpleaños, Sheryl! 🎁</h1>
+  <h1 id="birthday-title">🎉 ¡Snoopy tiene una sorpresa de cumpleaños, Sheryl! 🎁</h1>
   <div id="mensaje-camino">Camina y recoge los regalos... ¡Snoopy tiene algo especial para ti! 🎂</div>
   <div id="scene">
     <div id="gift-pyramid">
