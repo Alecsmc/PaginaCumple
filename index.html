@@ -17,14 +17,15 @@
         linear-gradient(135deg,#FFE5EC 0%,#FFF1E0 50%,#E0F7FA 100%),
         repeating-linear-gradient(45deg,rgba(255,255,255,0.1) 0 10px,transparent 10px 20px);
     }
+
+    /* ---- TÍTULO ANIMADO ---- */
     #birthday-title {
       position: absolute;
-      top: 20px;
-      left: 50%;
+      top: 20px; left: 50%;
       transform: translateX(-50%);
       background: linear-gradient(135deg, #fff5f8, #e0f7fa);
-      padding: 14px 28px;
-      border-radius: 20px;
+      padding: 1rem 2rem;
+      border-radius: 1.25rem;
       z-index: 5;
       font-size: 2.4rem;
       font-weight: bold;
@@ -37,259 +38,232 @@
       text-shadow: 1px 1px #fff;
     }
     @keyframes bounceTitle {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-6px); }
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%    { transform: translateX(-50%) translateY(-6px); }
     }
+
+    /* ---- BANDERINES ---- */
     #bunting {
-      position:absolute; top:80px; left:50%; transform:translateX(-50%);
+      position:absolute; top:80px; left:50%;
+      transform:translateX(-50%);
       display:flex; gap:6px; z-index:3;
     }
     .flag {
-      width:0; height:0; border-left:14px solid transparent;
+      width:0; height:0;
+      border-left:14px solid transparent;
       border-right:14px solid transparent;
       border-bottom:24px solid var(--clr);
     }
+
+    /* ---- REGALOS EN PISTA ---- */
     .gift {
-  position: absolute;
-  bottom: 30px;
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(145deg, #4ca5ff, #1976d2);
-  border-radius: 6px;
-  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.4);
-  border: 1px solid #fff;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+      position: absolute;
+      bottom: 30px;
+      width: 44px; height: 44px;
+      background: linear-gradient(145deg, #4ca5ff, #1976d2);
+      border-radius: 6px;
+      box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.4);
+      border: 1px solid #fff;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
     .gift::before, .gift::after {
-  width: 5px; height: 100%;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-}
+      content: "";
+      position: absolute;
+      background: white;
+      z-index: 2;
+    }
     .gift::before {
-  width: 100%; height: 5px;
-  top: 50%; left: 0;
-  transform: translateY(-50%);
-}
-    .gift::after {
-      width: 4px; height: 100%; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; height: 5px;
+      top: 50%; left: 0;
+      transform: translateY(-50%);
     }
     .gift::after {
-      border-radius: 50%;
-      width: 10px; height: 10px;
-      background: gold;
-      top: -8px; left: 50%; transform: translateX(-50%);
+      width: 5px; height: 100%;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
     }
     .gift.collected {
       transform: scale(0);
       opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
     }
+    .gift .bow {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      width: 14px; height: 14px;
+      background: radial-gradient(circle at center, #ff5252, #b71c1c);
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    }
+
+    /* ---- ESCENA Y CANVAS ---- */
     #scene {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 800px;
-  aspect-ratio: 2 / 1;
-  overflow: hidden;
-  background: url('fondo_pasto_casita.png') center bottom no-repeat;
-  background-size: 100% 100%;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
-}
+      position: absolute;
+      bottom: 80px; left: 50%;
+      transform: translateX(-50%);
+      width: 100%; max-width: 800px;
+      aspect-ratio: 2/1;
+      overflow: hidden;
+      background: url('fondo_pasto_casita.png') center bottom no-repeat;
+      background-size: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      padding: 0 1rem;
+      box-sizing: border-box;
+    }
     #gameCanvas {
       position:absolute; top:0; left:0;
-      width:100%; height:100%;
+      width:100% !important;
+      height:auto  !important;
       background: rgba(255,255,255,0.3);
-      border:2px solid #FFC0CB; border-radius:12px; z-index:1;
+      border:none;
+      border-radius:12px;
+      z-index:1;
     }
+
+    /* ---- SNOOPY ESPERANDO ---- */
     #snoopy-wait {
-      position:absolute; bottom:0; right:10px;
-      image-rendering:pixelated; z-index:2;
+      position:absolute;
+      bottom:0; right:10px;
+      image-rendering:pixelated;
+      z-index:2;
       transform:scaleX(-1);
-      animation:anxiousBounce 1s ease-in-out infinite, flicker 0.2s infinite alternate;
+      animation: anxiousBounce 1s ease-in-out infinite,
+                 flicker       0.2s infinite alternate;
     }
     @keyframes anxiousBounce {
       0%,100% { transform: scaleX(-1) translateY(0); }
       50%     { transform: scaleX(-1) translateY(-6px); }
     }
     @keyframes flicker {
-      0%{filter:brightness(1)}50%{filter:brightness(1.4)}100%{filter:brightness(1)}
+      0% { filter: brightness(1); }
+      50%{ filter: brightness(1.4); }
+      100%{ filter: brightness(1); }
     }
+
+    /* ---- MENSAJE FLOTANTE ---- */
     #mensaje-camino {
       position: absolute;
-      top: 170px;
-      left: 50%;
+      top: 170px; left: 50%;
       transform: translateX(-50%);
+      max-width: 80vw;
       font-size: 1.2rem;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 6px 12px;
+      background: rgba(255,255,255,0.95);
+      padding: 0.5rem 1rem;
       border-radius: 8px;
       z-index: 10;
       color: #444;
       font-weight: 500;
+      text-align: center;
     }
+
+    /* ---- CONTROLES TÁCTILES ---- */
     #touch-controls {
-      position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
-      z-index:9999; display:flex; gap:20px;
+      position:fixed;
+      bottom:5%; left:50%;
+      transform:translateX(-50%);
+      display:flex; gap:20px;
+      z-index:10000;
     }
     #touch-controls button {
-      font-size:2rem; padding:10px 20px; border-radius:12px; border:none;
-      background-color:rgba(255,255,255,0.9);
+      font-size:2rem;
+      min-width:48px; min-height:48px;
+      padding:0.5rem 1rem;
+      border:none;
+      border-radius:12px;
+      background:rgba(255,255,255,0.9);
       box-shadow:2px 2px 6px rgba(0,0,0,0.3);
-      cursor:pointer; user-select:none;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    /* ---- EFECTOS DECORATIVOS ---- */
+    .confetti, .balloon, .drop-gift, .star {
+      pointer-events: none;
     }
     .confetti {
-    position: absolute;
-    width: 8px; height: 8px;
-    background-color: red;
-    animation: confettiFall linear infinite;
-    z-index: 9999;
-  }
-  @keyframes confettiFall {
-    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-  .balloon {
-    position: absolute;
-    width: 30px; height: 45px;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: floatUp 6s ease-in infinite;
-    z-index: 9998;
-  }
-  .balloon::after {
-    content: '';
-    position: absolute;
-    bottom: -10px; left: 50%;
-    width: 2px; height: 20px;
-    background: black;
-    transform: translateX(-50%);
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 0.2; }
-    30% { opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
-  }
-  .drop-gift {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background: linear-gradient(to top, #e91e63, #ffebee);
-    border: 2px solid #fff;
-    border-radius: 6px;
-    animation: dropGift 5s linear infinite;
-    z-index: 9997;
-  }
-  @keyframes dropGift {
-    0% { transform: translateY(-50px) rotate(0); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-.gift .bow {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 14px;
-  background: radial-gradient(circle at center, #ff5252, #b71c1c);
-  border-radius: 50%;
-  box-shadow: 0 0 4px rgba(0,0,0,0.2);
-}
+      position: absolute;
+      width: 8px; height: 8px;
+      background-color: red;
+      animation: confettiFall linear infinite;
+      z-index: 9999;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(-10px) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    .balloon {
+      position: absolute;
+      width: 30px; height: 45px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: floatUp 6s ease-in infinite;
+      z-index: 9998;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 50%;
+      width: 2px; height: 20px;
+      background: black;
+      transform: translateX(-50%);
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0); opacity: 0.2; }
+      30%  { opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+    .drop-gift {
+      position: absolute;
+      width: 24px; height: 24px;
+      background: linear-gradient(to top, #e91e63, #ffebee);
+      border: 2px solid #fff;
+      border-radius: 6px;
+      animation: dropGift 5s linear infinite;
+      z-index: 9997;
+    }
+    @keyframes dropGift {
+      0%   { transform: translateY(-50px) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    .star {
+      position: absolute;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+      z-index: 2;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.3; transform: scale(1); }
+      50%     { opacity: 1;   transform: scale(1.2); }
+    }
 
+    /* ---- OCULTAR LA TORRE DE REGALOS A LA DERECHA ---- */
+    #gift-tower {
+      display: none !important;
+    }
 
-#garland {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: repeating-linear-gradient(45deg, #ff6384, #ff6384 10px, #36a2eb 10px, #36a2eb 20px, #ffce56 20px, #ffce56 30px);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  z-index: 3;
-  opacity: 0.6;
-}
-.star {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-  animation: twinkle 2s infinite ease-in-out;
-  z-index: 2;
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-#gift-tower {
-  position: absolute;
-  right: 20px;
-  bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 2;
-}
-.gift-tower-box {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(145deg, #ff80ab, #ec407a);
-  border-radius: 6px;
-  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.3);
-  border: 1px solid #fff;
-  position: relative;
-}
-.gift-tower-box::before, .gift-tower-box::after {
-  content: '';
-  position: absolute;
-  background: white;
-  z-index: 2;
-}
-.gift-tower-box::before {
-  width: 100%; height: 5px;
-  top: 50%; left: 0;
-  transform: translateY(-50%);
-}
-.gift-tower-box::after {
-  width: 5px; height: 100%;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-}
-#gift-pyramid {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  z-index: 1;
-}
-#gift-pyramid .row {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-}
-
-
-
-</style>
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 360px) {
+      #birthday-title { font-size:1.8rem; padding:.5rem 1rem; }
+      #mensaje-camino { font-size:1rem; top:120px; }
+      .confetti, .balloon, .drop-gift, .star { display: none !important; }
+      .flag { border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:18px solid var(--clr); }
+      #touch-controls button { font-size:1.25rem; min-width:40px; min-height:40px; }
+    }
+    @media (min-width:361px) and (max-width:600px) {
+      #birthday-title { font-size:2.2rem; padding:.75rem 1.5rem; }
+      #mensaje-camino { font-size:1.1rem; top:140px; }
+    }
+  </style>
 </head>
 <body>
-  <div id="gift-tower">
-    <div class="gift-tower-box"></div>
-    <div class="gift-tower-box"></div>
-    <div class="gift-tower-box"></div>
-    <div class="gift-tower-box"></div>
-  </div>
+  <!-- TORRE DE REGALOS ELIMINADA -->
+
   <div id="garland"></div>
   <div id="effect-container"></div>
-  <div id="effect-container"></div>
+
   <div id="bunting">
     <div class="flag" style="--clr:#FF6384"></div>
     <div class="flag" style="--clr:#FFCE56"></div>
@@ -297,8 +271,15 @@
     <div class="flag" style="--clr:#4BC0C0"></div>
     <div class="flag" style="--clr:#9966FF"></div>
   </div>
-  <h1 id="birthday-title">🎉 ¡Snoopy tiene una sorpresa de cumpleaños, Sheryl! 🎁</h1>
-  <div id="mensaje-camino">Camina y recoge los regalos... ¡Snoopy tiene algo especial para ti! 🎂</div>
+
+  <h1 id="birthday-title">
+    🎉 ¡Snoopy tiene una sorpresa de cumpleaños, Sheryl! 🎁
+  </h1>
+
+  <div id="mensaje-camino">
+    Camina y recoge los regalos... ¡Snoopy tiene algo especial para ti! 🎂
+  </div>
+
   <div id="scene">
     <div id="gift-pyramid">
       <div class="row">
@@ -314,39 +295,29 @@
         <div class="gift-tower-box"></div>
       </div>
     </div>
+
     <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <div id="gift-pyramid">
-      <div class="row">
-        <div class="gift-tower-box"></div>
-        <div class="gift-tower-box"></div>
-        <div class="gift-tower-box"></div>
-      </div>
-      <div class="row">
-        <div class="gift-tower-box"></div>
-        <div class="gift-tower-box"></div>
-      </div>
-      <div class="row">
-        <div class="gift-tower-box"></div>
-      </div>
-    </div>
     <div id="gifts-container"></div>
     <img id="snoopy-wait" src="snoopy_cake_wait.png" alt="Snoopy esperando">
   </div>
+
   <div id="touch-controls">
     <button id="left-btn">⬅️</button>
     <button id="right-btn">➡️</button>
   </div>
+
   <script>
     const canvas = document.getElementById('gameCanvas'),
           ctx = canvas.getContext('2d'),
           snoopyImgEl = document.getElementById('snoopy-wait'),
           mensaje = document.getElementById('mensaje-camino'),
-          FLOOR_H = 30,
+          FLOOR_H = 50,
           giftContainer = document.getElementById("gifts-container");
 
     ctx.imageSmoothingEnabled = false;
     const sherylSprite = new Image();
     sherylSprite.src = 'sheryl_sprite_6frames_finalclean.png';
+
     const FRAMES = 6;
     let frameW, frameH, x = 0, y = 0,
         frame = 0, lastTS = 0,
@@ -358,36 +329,34 @@
 
     const keys = { ArrowLeft:false, ArrowRight:false };
     document.addEventListener('keydown', e => {
-      if (e.key==='ArrowLeft') keys.ArrowLeft = true, direction = -1;
+      if (e.key==='ArrowLeft')  keys.ArrowLeft = true, direction = -1;
       if (e.key==='ArrowRight') keys.ArrowRight = true, direction = 1;
     });
     document.addEventListener('keyup', e => {
-      if (e.key==='ArrowLeft') keys.ArrowLeft = false;
+      if (e.key==='ArrowLeft')  keys.ArrowLeft = false;
       if (e.key==='ArrowRight') keys.ArrowRight = false;
     });
     document.getElementById('left-btn').addEventListener('touchstart', () => keys.ArrowLeft = true);
-    document.getElementById('left-btn').addEventListener('touchend', () => keys.ArrowLeft = false);
-    document.getElementById('right-btn').addEventListener('touchstart', () => keys.ArrowRight = true);
-    document.getElementById('right-btn').addEventListener('touchend', () => keys.ArrowRight = false);
+    document.getElementById('left-btn').addEventListener('touchend',   () => keys.ArrowLeft = false);
+    document.getElementById('right-btn').addEventListener('touchstart',() => keys.ArrowRight = true);
+    document.getElementById('right-btn').addEventListener('touchend',  () => keys.ArrowRight = false);
 
     function renderGifts() {
       const colors = [
-        ['#ff69b4', '#c71585'], ['#36A2EB', '#1e88e5'], ['#FFCE56', '#ffa500'],
-        ['#9966FF', '#663399'], ['#4BC0C0', '#008080'], ['#FF6384', '#c2185b']
+        ['#ff69b4','#c71585'],['#36A2EB','#1e88e5'],
+        ['#FFCE56','#ffa500'],['#9966FF','#663399'],
+        ['#4BC0C0','#008080'],['#FF6384','#c2185b']
       ];
-      const giftPositions = Array.from({length: 10}, () => Math.floor(Math.random() * 700) + 30);
+      const giftPositions = Array.from({length:10}, () => Math.floor(Math.random()*700)+30);
       giftPositions.forEach((pos, index) => {
         const div = document.createElement("div");
         div.className = "gift";
-        const [base, shade] = colors[index % colors.length];
-        div.style.setProperty('--base', base);
-        div.style.setProperty('--shade', shade);
+        div.style.left = pos + 'px';
         div.dataset.giftId = index;
-        div.style.left = `${pos}px`;
         const bow = document.createElement('div');
-bow.className = 'bow';
-div.appendChild(bow);
-giftContainer.appendChild(div);
+        bow.className = 'bow';
+        div.appendChild(bow);
+        giftContainer.appendChild(div);
       });
     }
 
@@ -400,19 +369,24 @@ giftContainer.appendChild(div);
 
       const finalScreen = document.createElement('div');
       finalScreen.id = 'final-screen';
-      finalScreen.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fffdf2;display:flex;align-items:center;justify-content:center;padding:20px;flex-direction:column;z-index:99999;';
-
+      finalScreen.style.cssText = 
+        'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fffdf2;'+
+        'display:flex;align-items:center;justify-content:center;flex-direction:column;'+
+        'padding:20px;z-index:99999;';
       const toggleImg = document.createElement('img');
       toggleImg.id = 'final-toggle-img';
       toggleImg.src = 'final_card.png';
-      toggleImg.style.cssText = 'max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.4);cursor:pointer;';
+      toggleImg.style.cssText = 
+        'max-width:100%;max-height:90vh;border-radius:16px;'+
+        'box-shadow:0 0 20px rgba(0,0,0,0.4);cursor:pointer;';
 
       let currentImage = 0;
       toggleImg.addEventListener('click', () => {
-        currentImage = (currentImage + 1) % 2;
-        toggleImg.src = currentImage === 0 ? 'final_card.png' : 'final_card_2.png';
+        currentImage = 1 - currentImage;
+        toggleImg.src = currentImage 
+          ? 'final_card_2.png'
+          : 'final_card.png';
       });
-
       finalScreen.appendChild(toggleImg);
       document.body.appendChild(finalScreen);
     }
@@ -422,116 +396,105 @@ giftContainer.appendChild(div);
       frameH = sherylSprite.height;
       y = canvas.height - FLOOR_H - frameH;
       snoopyImgEl.style.height = frameH + 'px';
-      snoopyImgEl.style.width = 'auto';
+      snoopyImgEl.style.width  = 'auto';
       setTimeout(() => {
         snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
       }, 50);
       renderGifts();
       requestAnimationFrame(loop);
+      window.addEventListener('resize', () => {
+        // redimensiona canvas si cambian
+        canvas.style.width  = '100%';
+        canvas.style.height = 'auto';
+      });
     };
 
     function loop(ts) {
       if (!lastTS) lastTS = ts;
       const delta = ts - lastTS;
-      if (delta > 150 && (keys.ArrowLeft || keys.ArrowRight) && !stopped) {
+      if (delta > 150 && (keys.ArrowLeft||keys.ArrowRight) && !stopped) {
         frame = (frame + 1) % FRAMES;
         lastTS = ts;
       }
       if (!stopped) {
         if (keys.ArrowRight && x + frameW < canvas.width - snoopyWidth - 10) x += SPEED;
-        if (keys.ArrowLeft && x > 0) x -= SPEED;
+        if (keys.ArrowLeft  && x > 0)                             x -= SPEED;
       }
-
-      document.querySelectorAll(".gift").forEach(giftEl => {
-        const giftId = parseInt(giftEl.dataset.giftId);
-        const giftX = parseFloat(giftEl.style.left);
-        const overlap = x + frameW > giftX && x < giftX + 30;
-        if (overlap && !collectedGifts.has(giftId)) {
-          collectedGifts.add(giftId);
-          giftEl.classList.add("collected");
+      document.querySelectorAll(".gift").forEach(el => {
+        const id = +el.dataset.giftId;
+        const gx = +el.style.left.replace('px','');
+        if (!el.classList.contains('collected') && x + frameW > gx && x < gx + 30) {
+          el.classList.add('collected');
         }
       });
-
       if (x > 200 && x < 300) mensaje.textContent = "¡Ya casi llegas!";
-      if (x >= 300) mensaje.textContent = "¡Estás muy cerca!";
-
+      if (x >= 300)         mensaje.textContent = "¡Estás muy cerca!";
       if (!stopped && x + frameW >= canvas.width - snoopyWidth - 10) {
-        stopped = true;
-        showFinalScreen();
-        return;
+        stopped = true; showFinalScreen(); return;
       }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const floorImages = ['gorro1.png', 'dulce1.png', 'gorro2.png', 'caramelo2.png'];
-for (let i = 0; i < canvas.width; i += 40) {
-  const img = new Image();
-  img.src = floorImages[i % floorImages.length];
-  img.onload = () => ctx.drawImage(img, i, canvas.height - FLOOR_H, 40, FLOOR_H);
-}
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      // dibujar piso con gorros y dulces
+      const floorImgs = ['gorro1.png','dulce1.png','gorro2.png','caramelo2.png'];
+      for (let i=0;i<canvas.width;i+=40) {
+        const img = new Image();
+        img.src = floorImgs[i/40 % floorImgs.length];
+        img.onload = () => ctx.drawImage(img,i,canvas.height-FLOOR_H,40,FLOOR_H);
+      }
       ctx.save();
-      if (direction === -1) {
-        ctx.translate(x + frameW, 0);
-        ctx.scale(-1, 1);
-        ctx.drawImage(sherylSprite, frame * frameW, 0, frameW, frameH, 0, y, frameW, frameH);
+      if (direction===-1) {
+        ctx.translate(x+frameW,0);
+        ctx.scale(-1,1);
+        ctx.drawImage(sherylSprite, frame*frameW,0,frameW,frameH,0,y,frameW,frameH);
       } else {
-        ctx.drawImage(sherylSprite, frame * frameW, 0, frameW, frameH, x, y, frameW, frameH);
+        ctx.drawImage(sherylSprite, frame*frameW,0,frameW,frameH,x,y,frameW,frameH);
       }
       ctx.restore();
       requestAnimationFrame(loop);
     }
-  function launchConfetti() {
-  const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
-  for (let i = 0; i < 30; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.left = Math.random() * 100 + 'vw';
-    c.style.top = '-10px';
-    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    c.style.animationDuration = 3 + Math.random() * 2 + 's';
-    document.getElementById('effect-container').appendChild(c);
-    setTimeout(() => c.remove(), 6000);
-  }
-}
-function launchBalloons() {
-  const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
-  for (let i = 0; i < 10; i++) {
-    const b = document.createElement('div');
-    b.className = 'balloon';
-    b.style.left = Math.random() * 100 + 'vw';
-    b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    b.style.animationDuration = 6 + Math.random() * 4 + 's';
-    document.getElementById('effect-container').appendChild(b);
-    setTimeout(() => b.remove(), 10000);
-  }
-}
-function dropGiftsFromTop() {
-  for (let i = 0; i < 6; i++) {
-    const g = document.createElement('div');
-    g.className = 'drop-gift';
-    g.style.left = Math.random() * 100 + 'vw';
-    g.style.animationDuration = 4 + Math.random() * 3 + 's';
-    document.getElementById('effect-container').appendChild(g);
-    setTimeout(() => g.remove(), 7000);
-  }
-}
-launchConfetti();
-launchBalloons();
-dropGiftsFromTop();
 
-const effectContainer = document.getElementById('effect-container');
-for (let i = 0; i < 15; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.top = Math.random() * 60 + 'px';
-  s.style.left = Math.random() * 100 + 'vw';
-  effectContainer.appendChild(s);
-}
-
-setInterval(() => {
-  launchConfetti();
-  launchBalloons();
-  dropGiftsFromTop();
-}, 6000); 
-</script>
+    // efectos iniciales
+    (function launchAll(){
+      const colors = ['#FF6384','#36A2EB','#FFCE56','#9966FF','#4BC0C0'];
+      // confetti
+      for(let i=0;i<30;i++){
+        const c=document.createElement('div');
+        c.className='confetti';
+        c.style.left= Math.random()*100+'vw';
+        c.style.top='-10px';
+        c.style.backgroundColor=colors[i%colors.length];
+        c.style.animationDuration=(3+Math.random()*2)+'s';
+        document.getElementById('effect-container').append(c);
+        setTimeout(()=>c.remove(),6000);
+      }
+      // balloons
+      for(let i=0;i<10;i++){
+        const b=document.createElement('div');
+        b.className='balloon';
+        b.style.left= Math.random()*100+'vw';
+        b.style.backgroundColor=colors[i%colors.length];
+        b.style.animationDuration=(6+Math.random()*4)+'s';
+        document.getElementById('effect-container').append(b);
+        setTimeout(()=>b.remove(),10000);
+      }
+      // drop gifts
+      for(let i=0;i<6;i++){
+        const g=document.createElement('div');
+        g.className='drop-gift';
+        g.style.left= Math.random()*100+'vw';
+        g.style.animationDuration=(4+Math.random()*3)+'s';
+        document.getElementById('effect-container').append(g);
+        setTimeout(()=>g.remove(),7000);
+      }
+      // stars
+      for(let i=0;i<15;i++){
+        const s=document.createElement('div');
+        s.className='star';
+        s.style.left= Math.random()*100+'vw';
+        s.style.top= Math.random()*60 +'px';
+        document.getElementById('effect-container').append(s);
+      }
+      setInterval(launchAll,6000);
+    })();
+  </script>
 </body>
 </html>
