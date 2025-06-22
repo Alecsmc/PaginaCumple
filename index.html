@@ -2,17 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Fiesta Romántica de Sheryl</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiesta Romántica de Sheryl</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box }
     html, body {
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
-      overflow-y: hidden;
-      touch-action: none;
+      overflow: hidden;
       font-family: sans-serif;
+      touch-action: none;
     }
 
     body {
@@ -81,8 +80,10 @@
     }
 
     #snoopy-wait {
-      position:absolute; bottom:0; right:10px;
-      image-rendering:pixelated; z-index:2;
+      position:absolute;
+      bottom:0; right:10px;
+      image-rendering:pixelated;
+      z-index:2;
       transform:scaleX(-1);
       animation:
         anxiousBounce 1s ease-in-out infinite,
@@ -116,6 +117,12 @@
       background-color: rgba(255,255,255,0.9);
       box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
       cursor: pointer;
+
+      /* Anti-selección y sin contorno */
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
     }
 
     #music { display:none }
@@ -138,8 +145,8 @@
   </div>
 
   <div id="touch-controls">
-    <button id="left-btn">⬅️</button>
-    <button id="right-btn">➡️</button>
+    <button id="left-btn" tabindex="-1">⬅️</button>
+    <button id="right-btn" tabindex="-1">➡️</button>
   </div>
 
   <audio id="music" src="birthday_song.mp3" autoplay loop></audio>
@@ -187,9 +194,13 @@
       frameH = sherylSprite.height;
       y      = canvas.height - FLOOR_H - frameH;
 
-      snoopyImgEl.style.height = frameH + 'px';
+      const scaleFactor = canvas.offsetHeight / canvas.height;
+      snoopyImgEl.style.height = (frameH * scaleFactor) + 'px';
       snoopyImgEl.style.width  = 'auto';
-      snoopyWidth = snoopyImgEl.getBoundingClientRect().width;
+
+      setTimeout(() => {
+        snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
+      }, 50);
 
       requestAnimationFrame(loop);
     };
@@ -198,8 +209,8 @@
       if (!lastTS) lastTS = ts;
       const delta = ts - lastTS;
 
-      if (delta > 150 && (keys.ArrowLeft||keys.ArrowRight) && !stopped) {
-        frame = (frame+1) % FRAMES;
+      if (delta > 150 && (keys.ArrowLeft || keys.ArrowRight) && !stopped) {
+        frame = (frame + 1) % FRAMES;
         lastTS = ts;
       }
 
@@ -216,21 +227,26 @@
         stopped = true;
       }
 
-      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#8B4513';
       ctx.fillRect(0, canvas.height - FLOOR_H, canvas.width, FLOOR_H);
 
       ctx.save();
       if (direction === -1) {
-        ctx.translate(x + frameW/2, 0);
+        ctx.translate(x + frameW, 0);
         ctx.scale(-1, 1);
-        ctx.translate(-x - frameW/2, 0);
+        ctx.drawImage(
+          sherylSprite,
+          frame * frameW, 0, frameW, frameH,
+          0, y, frameW, frameH
+        );
+      } else {
+        ctx.drawImage(
+          sherylSprite,
+          frame * frameW, 0, frameW, frameH,
+          x, y, frameW, frameH
+        );
       }
-      ctx.drawImage(
-        sherylSprite,
-        frame * frameW, 0, frameW, frameH,
-        x, y, frameW, frameH
-      );
       ctx.restore();
 
       requestAnimationFrame(loop);
