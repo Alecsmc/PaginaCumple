@@ -68,8 +68,7 @@
     #gameCanvas {
       position:absolute;
       top:0; left:0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       background:
         url('assets/church_bg.png') no-repeat center bottom,
         rgba(255,255,255,0.7);
@@ -117,12 +116,33 @@
       background-color: rgba(255,255,255,0.9);
       box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
       cursor: pointer;
-
-      /* Anti-selección y sin contorno */
       user-select: none;
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
       outline: none;
+    }
+
+    #final-screen {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #fffdf2;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #final-screen img {
+      max-width: 100%;
+      max-height: 100vh;
+      width: auto;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
     }
 
     #music { display:none }
@@ -149,12 +169,17 @@
     <button id="right-btn" tabindex="-1">➡️</button>
   </div>
 
+  <div id="final-screen">
+    <img src="final_card.png" alt="Feliz cumpleaños Sheryl">
+  </div>
+
   <audio id="music" src="birthday_song.mp3" autoplay loop></audio>
 
   <script>
     const canvas       = document.getElementById('gameCanvas'),
           ctx          = canvas.getContext('2d'),
           snoopyImgEl  = document.getElementById('snoopy-wait'),
+          finalScreen  = document.getElementById('final-screen'),
           FLOOR_H      = 30;
 
     ctx.imageSmoothingEnabled = false;
@@ -194,9 +219,9 @@
       frameH = sherylSprite.height;
       y      = canvas.height - FLOOR_H - frameH;
 
-      const scaleFactor = canvas.offsetHeight / canvas.height;
-      snoopyImgEl.style.height = (frameH * scaleFactor) + 'px';
+      snoopyImgEl.style.height = frameH + 'px';
       snoopyImgEl.style.width  = 'auto';
+      finalScreen.style.display = 'none'; // 🔐 asegúrate de que empiece oculto
 
       setTimeout(() => {
         snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
@@ -204,6 +229,14 @@
 
       requestAnimationFrame(loop);
     };
+
+    function showFinalScreen() {
+      document.getElementById('scene').style.display = 'none';
+      document.getElementById('bunting').style.display = 'none';
+      document.getElementById('birthday-title').style.display = 'none';
+      document.getElementById('touch-controls').style.display = 'none';
+      finalScreen.style.display = 'flex';
+    }
 
     function loop(ts) {
       if (!lastTS) lastTS = ts;
@@ -225,6 +258,8 @@
 
       if (!stopped && x + frameW >= canvas.width - snoopyWidth - collisionMargin) {
         stopped = true;
+        showFinalScreen();
+        return;
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
