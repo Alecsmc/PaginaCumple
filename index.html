@@ -35,21 +35,46 @@
       border-right:14px solid transparent;
       border-bottom:24px solid var(--clr);
     }
-    #balloon-bg {
-      position:absolute; top:0; left:0;
-      width:100%; height:100%; opacity:0.5;
-      background:url('assets/balloon_bg_pastel.png') no-repeat center bottom;
-      background-size:cover; z-index:0;
+    #confetti-container, .balloon {
+      position: absolute;
+      pointer-events: none;
+    }
+    .confetti {
+      position: absolute;
+      width: 8px; height: 8px;
+      background-color: red;
+      animation: confettiFall linear infinite;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    .balloon {
+      width: 30px; height: 45px; border-radius: 50%; opacity: 0.8;
+      animation: floatUp 6s ease-in infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 20px;
+      background: black;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.2; }
+      30% { opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
     }
     #scene {
       position:absolute; bottom:80px; left:50%; transform:translateX(-50%);
       width:100%; max-width:800px; aspect-ratio: 2 / 1; overflow:hidden;
+      background: url('fondo_fiesta.png') no-repeat center bottom;
+      background-size: cover;
     }
     #gameCanvas {
       position:absolute; top:0; left:0;
       width:100%; height:100%;
-      background:url('assets/church_bg.png') no-repeat center bottom, rgba(255,255,255,0.7);
-      background-size:cover;
+      background: rgba(255,255,255,0.7);
       border:2px solid #FFC0CB; border-radius:12px; z-index:1;
     }
     #snoopy-wait {
@@ -64,6 +89,17 @@
     }
     @keyframes flicker {
       0%{filter:brightness(1)}50%{filter:brightness(1.4)}100%{filter:brightness(1)}
+    }
+    #mensaje-camino {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 8px 12px;
+      border-radius: 8px;
+      z-index: 10;
     }
     #touch-controls {
       position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
@@ -88,7 +124,7 @@
   </style>
 </head>
 <body>
-  <div id="balloon-bg"></div>
+  <div id="confetti-container"></div>
   <div id="bunting">
     <div class="flag" style="--clr:#FF6384"></div>
     <div class="flag" style="--clr:#FFCE56"></div>
@@ -97,6 +133,7 @@
     <div class="flag" style="--clr:#9966FF"></div>
   </div>
   <h1 id="birthday-title">¡Feliz Cumpleaños, Sheryl!</h1>
+  <div id="mensaje-camino">¡Vamos a encontrarnos con Snoopy!</div>
   <div id="scene">
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <img id="snoopy-wait" src="snoopy_cake_wait.png" alt="Snoopy esperando">
@@ -114,6 +151,8 @@
           snoopyImgEl = document.getElementById('snoopy-wait'),
           finalScreen = document.getElementById('final-screen'),
           toggleImg = document.getElementById('final-toggle-img'),
+          mensaje = document.getElementById('mensaje-camino'),
+          confettiContainer = document.getElementById('confetti-container'),
           FLOOR_H = 30;
 
     ctx.imageSmoothingEnabled = false;
@@ -161,7 +200,31 @@
       document.getElementById('bunting').style.display = 'none';
       document.getElementById('birthday-title').style.display = 'none';
       document.getElementById('touch-controls').style.display = 'none';
+      mensaje.style.display = 'none';
       finalScreen.style.display = 'flex';
+      for (let i = 0; i < 50; i++) launchConfetti();
+      for (let i = 0; i < 20; i++) createBalloon();
+    }
+
+    function launchConfetti() {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF'][Math.floor(Math.random() * 4)];
+      confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
+      confettiContainer.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 5000);
+    }
+
+    function createBalloon() {
+      const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
     }
 
     toggleImg.addEventListener('click', () => {
@@ -180,11 +243,16 @@
         if (keys.ArrowRight && x + frameW < canvas.width - snoopyWidth - 10) x += SPEED;
         if (keys.ArrowLeft && x > 0) x -= SPEED;
       }
+
+      if (x > 200 && x < 300) mensaje.textContent = "¡Ya casi llegas!";
+      if (x >= 300) mensaje.textContent = "¡Estás muy cerca!";
+
       if (!stopped && x + frameW >= canvas.width - snoopyWidth - 10) {
         stopped = true;
         showFinalScreen();
         return;
       }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#8B4513';
       ctx.fillRect(0, canvas.height - FLOOR_H, canvas.width, FLOOR_H);
