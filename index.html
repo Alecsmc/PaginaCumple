@@ -18,13 +18,27 @@
         repeating-linear-gradient(45deg,rgba(255,255,255,0.1) 0 10px,transparent 10px 20px);
     }
     #birthday-title {
-      position:absolute; top:20px; left:50%; transform:translateX(-50%);
-      background:rgba(255,255,255,0.8); padding:8px 16px;
-      border-radius:8px; z-index:5; font-size:2.2rem;
-      animation:colorChange 6s linear infinite;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #fff5f8, #e0f7fa);
+      padding: 14px 28px;
+      border-radius: 20px;
+      z-index: 5;
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: #cc3366;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      animation: bounceTitle 2s ease infinite;
+      display: inline-block;
+      border: 2px dashed #ff80ab;
+      text-shadow: 1px 1px #fff;
     }
-    @keyframes colorChange {
-      0%{color:#FF6384}25%{color:#36A2EB}50%{color:#4BC0C0}75%{color:#9966FF}100%{color:#FFCE56}
+    @keyframes bounceTitle {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-6px); }
     }
     #bunting {
       position:absolute; top:80px; left:50%; transform:translateX(-50%);
@@ -35,71 +49,59 @@
       border-right:14px solid transparent;
       border-bottom:24px solid var(--clr);
     }
-    #confetti-container, .balloon {
-      position: absolute;
-      pointer-events: none;
+    .gift {
+  position: absolute;
+  bottom: 30px;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(145deg, #4ca5ff, #1976d2);
+  border-radius: 6px;
+  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.4);
+  border: 1px solid #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+    .gift::before, .gift::after {
+  width: 5px; height: 100%;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+}
+    .gift::before {
+  width: 100%; height: 5px;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+}
+    .gift::after {
+      width: 4px; height: 100%; top: 0; left: 50%; transform: translateX(-50%);
     }
-    .confetti {
-      position: absolute;
-      width: 8px; height: 8px;
-      background-color: red;
-      animation: confettiFall linear infinite;
-    }
-    @keyframes confettiFall {
-      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-    .balloon {
-      width: 30px; height: 45px; border-radius: 50%; opacity: 0.8;
-      animation: floatUp 6s ease-in infinite;
-    }
-    .balloon::after {
-      content: '';
-      position: absolute;
-      bottom: -10px; left: 50%; transform: translateX(-50%);
-      width: 2px; height: 20px;
-      background: black;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 0.2; }
-      30% { opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
-
-    #scene {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 2 / 1;
-      overflow: hidden;
-      background: linear-gradient(to top, #4CAF50 0%, #A8E6A3 60%, #D0F7DC 100%);
-      border-radius: 12px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-    #scene::before, #scene::after {
-      content: '';
-      position: absolute;
-      bottom: 30px;
-      width: 40px;
-      height: 60px;
-      background: radial-gradient(circle at 50% 20%, #2E7D32 40%, #1B5E20 100%);
+    .gift::after {
       border-radius: 50%;
-      z-index: 0;
+      width: 10px; height: 10px;
+      background: gold;
+      top: -8px; left: 50%; transform: translateX(-50%);
     }
-    #scene::before {
-      left: 40px;
+    .gift.collected {
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
-    #scene::after {
-      right: 40px;
-    }
-
+    #scene {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  background: url('fondo_pasto_casita.png') center bottom no-repeat;
+  background-size: 100% 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
     #gameCanvas {
       position:absolute; top:0; left:0;
       width:100%; height:100%;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.3);
       border:2px solid #FFC0CB; border-radius:12px; z-index:1;
     }
     #snoopy-wait {
@@ -117,14 +119,16 @@
     }
     #mensaje-camino {
       position: absolute;
-      bottom: 120px;
+      top: 170px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.5rem;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 8px 12px;
+      font-size: 1.2rem;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 6px 12px;
       border-radius: 8px;
       z-index: 10;
+      color: #444;
+      font-weight: 500;
     }
     #touch-controls {
       position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
@@ -136,20 +140,181 @@
       box-shadow:2px 2px 6px rgba(0,0,0,0.3);
       cursor:pointer; user-select:none;
     }
-    #final-screen {
-      display:none; position:fixed; top:0; left:0;
-      width:100vw; height:100vh; background:#fffdf2;
-      z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;
-      flex-direction: column;
-    }
-    #final-toggle-img {
-      max-width: 100%; max-height: 90vh; border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4); cursor: pointer;
-    }
-  </style>
+    .confetti {
+    position: absolute;
+    width: 8px; height: 8px;
+    background-color: red;
+    animation: confettiFall linear infinite;
+    z-index: 9999;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+  .balloon {
+    position: absolute;
+    width: 30px; height: 45px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: floatUp 6s ease-in infinite;
+    z-index: 9998;
+  }
+  .balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 50%;
+    width: 2px; height: 20px;
+    background: black;
+    transform: translateX(-50%);
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0.2; }
+    30% { opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+  }
+  .drop-gift {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(to top, #e91e63, #ffebee);
+    border: 2px solid #fff;
+    border-radius: 6px;
+    animation: dropGift 5s linear infinite;
+    z-index: 9997;
+  }
+  @keyframes dropGift {
+    0% { transform: translateY(-50px) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+.gift .bow {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at center, #ff5252, #b71c1c);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+
+#garland {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: repeating-linear-gradient(45deg, #ff6384, #ff6384 10px, #36a2eb 10px, #36a2eb 20px, #ffce56 20px, #ffce56 30px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 3;
+  opacity: 0.6;
+}
+.star {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+  z-index: 2;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+#gift-tower {
+  position: absolute;
+  right: 20px;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+.gift-tower-box {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #ff80ab, #ec407a);
+  border-radius: 6px;
+  box-shadow: inset -3px -3px 6px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid #fff;
+  position: relative;
+}
+.gift-tower-box::before, .gift-tower-box::after {
+  content: '';
+  position: absolute;
+  background: white;
+  z-index: 2;
+}
+.gift-tower-box::before {
+  width: 100%; height: 5px;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+}
+.gift-tower-box::after {
+  width: 5px; height: 100%;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+}
+#gift-pyramid {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 1;
+}
+#gift-pyramid .row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+/* Ejemplo completo de media queries */
+@media (max-width: 360px) {
+  #birthday-title { font-size: 2rem; padding: .75rem 1.5rem; }
+  #scene { max-width: 100%; aspect-ratio: 1.5/1; padding: 0 .5rem; }
+  #touch-controls button { font-size:1.5rem; min-width:48px; min-height:48px; }
+}
+
+/* Flexbox centrar */
+body, #scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Canvas full-width responsive */
+#gameCanvas { width:100%; height:auto; }
+
+/* Asegurar área táctil mínima */
+#touch-controls button {
+  min-width:48px;
+  min-height:48px;
+  padding: .5rem 1rem;
+}
+
+</style>
 </head>
 <body>
-  <div id="confetti-container"></div>
+  <div id="gift-tower">
+    <div class="gift-tower-box"></div>
+    <div class="gift-tower-box"></div>
+    <div class="gift-tower-box"></div>
+    <div class="gift-tower-box"></div>
+  </div>
+  <div id="garland"></div>
+  <div id="effect-container"></div>
+  <div id="effect-container"></div>
   <div id="bunting">
     <div class="flag" style="--clr:#FF6384"></div>
     <div class="flag" style="--clr:#FFCE56"></div>
@@ -157,28 +322,52 @@
     <div class="flag" style="--clr:#4BC0C0"></div>
     <div class="flag" style="--clr:#9966FF"></div>
   </div>
-  <h1 id="birthday-title">¡Feliz Cumpleaños, Sheryl!</h1>
-  <div id="mensaje-camino">¡Vamos a encontrarnos con Snoopy!</div>
+  <h1 id="birthday-title">🎉 ¡Sorpresa de Cumpleaños, Sheryl! 🎁</h1>
+  <div id="mensaje-camino">Camina y recoge los regalos... ¡Snoopy tiene algo especial para ti! 🎂</div>
   <div id="scene">
+    <div id="gift-pyramid">
+      <div class="row">
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+      </div>
+      <div class="row">
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+      </div>
+      <div class="row">
+        <div class="gift-tower-box"></div>
+      </div>
+    </div>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="gift-pyramid">
+      <div class="row">
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+      </div>
+      <div class="row">
+        <div class="gift-tower-box"></div>
+        <div class="gift-tower-box"></div>
+      </div>
+      <div class="row">
+        <div class="gift-tower-box"></div>
+      </div>
+    </div>
+    <div id="gifts-container"></div>
     <img id="snoopy-wait" src="snoopy_cake_wait.png" alt="Snoopy esperando">
   </div>
   <div id="touch-controls">
-    <button id="left-btn" tabindex="-1">⬅️</button>
-    <button id="right-btn" tabindex="-1">➡️</button>
-  </div>
-  <div id="final-screen">
-    <img id="final-toggle-img" src="final_card.png" alt="Feliz cumple">
+    <button id="left-btn">⬅️</button>
+    <button id="right-btn">➡️</button>
   </div>
   <script>
     const canvas = document.getElementById('gameCanvas'),
           ctx = canvas.getContext('2d'),
           snoopyImgEl = document.getElementById('snoopy-wait'),
-          finalScreen = document.getElementById('final-screen'),
-          toggleImg = document.getElementById('final-toggle-img'),
           mensaje = document.getElementById('mensaje-camino'),
-          confettiContainer = document.getElementById('confetti-container'),
-          FLOOR_H = 30;
+          FLOOR_H = 30,
+          giftContainer = document.getElementById("gifts-container");
 
     ctx.imageSmoothingEnabled = false;
     const sherylSprite = new Image();
@@ -190,10 +379,9 @@
         direction = 1,
         SPEED = 2,
         snoopyWidth,
-        currentImage = 0;
+        collectedGifts = new Set();
 
     const keys = { ArrowLeft:false, ArrowRight:false };
-
     document.addEventListener('keydown', e => {
       if (e.key==='ArrowLeft') keys.ArrowLeft = true, direction = -1;
       if (e.key==='ArrowRight') keys.ArrowRight = true, direction = 1;
@@ -207,18 +395,26 @@
     document.getElementById('right-btn').addEventListener('touchstart', () => keys.ArrowRight = true);
     document.getElementById('right-btn').addEventListener('touchend', () => keys.ArrowRight = false);
 
-    sherylSprite.onload = () => {
-      frameW = sherylSprite.width / FRAMES;
-      frameH = sherylSprite.height;
-      y = canvas.height - FLOOR_H - frameH;
-      snoopyImgEl.style.height = frameH + 'px';
-      snoopyImgEl.style.width = 'auto';
-      finalScreen.style.display = 'none';
-      setTimeout(() => {
-        snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
-      }, 50);
-      requestAnimationFrame(loop);
-    };
+    function renderGifts() {
+      const colors = [
+        ['#ff69b4', '#c71585'], ['#36A2EB', '#1e88e5'], ['#FFCE56', '#ffa500'],
+        ['#9966FF', '#663399'], ['#4BC0C0', '#008080'], ['#FF6384', '#c2185b']
+      ];
+      const giftPositions = Array.from({length: 10}, () => Math.floor(Math.random() * 700) + 30);
+      giftPositions.forEach((pos, index) => {
+        const div = document.createElement("div");
+        div.className = "gift";
+        const [base, shade] = colors[index % colors.length];
+        div.style.setProperty('--base', base);
+        div.style.setProperty('--shade', shade);
+        div.dataset.giftId = index;
+        div.style.left = `${pos}px`;
+        const bow = document.createElement('div');
+bow.className = 'bow';
+div.appendChild(bow);
+giftContainer.appendChild(div);
+      });
+    }
 
     function showFinalScreen() {
       document.getElementById('scene').style.display = 'none';
@@ -226,36 +422,38 @@
       document.getElementById('birthday-title').style.display = 'none';
       document.getElementById('touch-controls').style.display = 'none';
       mensaje.style.display = 'none';
-      finalScreen.style.display = 'flex';
-      for (let i = 0; i < 50; i++) launchConfetti();
-      for (let i = 0; i < 20; i++) createBalloon();
+
+      const finalScreen = document.createElement('div');
+      finalScreen.id = 'final-screen';
+      finalScreen.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fffdf2;display:flex;align-items:center;justify-content:center;padding:20px;flex-direction:column;z-index:99999;';
+
+      const toggleImg = document.createElement('img');
+      toggleImg.id = 'final-toggle-img';
+      toggleImg.src = 'final_card.png';
+      toggleImg.style.cssText = 'max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 0 20px rgba(0,0,0,0.4);cursor:pointer;';
+
+      let currentImage = 0;
+      toggleImg.addEventListener('click', () => {
+        currentImage = (currentImage + 1) % 2;
+        toggleImg.src = currentImage === 0 ? 'final_card.png' : 'final_card_2.png';
+      });
+
+      finalScreen.appendChild(toggleImg);
+      document.body.appendChild(finalScreen);
     }
 
-    function launchConfetti() {
-      const confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.backgroundColor = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF'][Math.floor(Math.random() * 4)];
-      confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
-      confettiContainer.appendChild(confetti);
-      setTimeout(() => confetti.remove(), 5000);
-    }
-
-    function createBalloon() {
-      const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
-      const balloon = document.createElement('div');
-      balloon.className = 'balloon';
-      balloon.style.left = Math.random() * 100 + 'vw';
-      balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      balloon.style.animationDuration = (6 + Math.random() * 4) + 's';
-      document.body.appendChild(balloon);
-      setTimeout(() => balloon.remove(), 10000);
-    }
-
-    toggleImg.addEventListener('click', () => {
-      currentImage = (currentImage + 1) % 2;
-      toggleImg.src = currentImage === 0 ? 'final_card.png' : 'final_card_2.png';
-    });
+    sherylSprite.onload = () => {
+      frameW = sherylSprite.width / FRAMES;
+      frameH = sherylSprite.height;
+      y = canvas.height - FLOOR_H - frameH;
+      snoopyImgEl.style.height = frameH + 'px';
+      snoopyImgEl.style.width = 'auto';
+      setTimeout(() => {
+        snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
+      }, 50);
+      renderGifts();
+      requestAnimationFrame(loop);
+    };
 
     function loop(ts) {
       if (!lastTS) lastTS = ts;
@@ -269,6 +467,16 @@
         if (keys.ArrowLeft && x > 0) x -= SPEED;
       }
 
+      document.querySelectorAll(".gift").forEach(giftEl => {
+        const giftId = parseInt(giftEl.dataset.giftId);
+        const giftX = parseFloat(giftEl.style.left);
+        const overlap = x + frameW > giftX && x < giftX + 30;
+        if (overlap && !collectedGifts.has(giftId)) {
+          collectedGifts.add(giftId);
+          giftEl.classList.add("collected");
+        }
+      });
+
       if (x > 200 && x < 300) mensaje.textContent = "¡Ya casi llegas!";
       if (x >= 300) mensaje.textContent = "¡Estás muy cerca!";
 
@@ -279,8 +487,12 @@
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#8B4513';
-      ctx.fillRect(0, canvas.height - FLOOR_H, canvas.width, FLOOR_H);
+      const floorImages = ['gorro1.png', 'dulce1.png', 'gorro2.png', 'caramelo2.png'];
+for (let i = 0; i < canvas.width; i += 40) {
+  const img = new Image();
+  img.src = floorImages[i % floorImages.length];
+  img.onload = () => ctx.drawImage(img, i, canvas.height - FLOOR_H, 40, FLOOR_H);
+}
       ctx.save();
       if (direction === -1) {
         ctx.translate(x + frameW, 0);
@@ -292,6 +504,59 @@
       ctx.restore();
       requestAnimationFrame(loop);
     }
-  </script>
+  function launchConfetti() {
+  const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.top = '-10px';
+    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = 3 + Math.random() * 2 + 's';
+    document.getElementById('effect-container').appendChild(c);
+    setTimeout(() => c.remove(), 6000);
+  }
+}
+function launchBalloons() {
+  const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#9966FF', '#4BC0C0'];
+  for (let i = 0; i < 10; i++) {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    b.style.animationDuration = 6 + Math.random() * 4 + 's';
+    document.getElementById('effect-container').appendChild(b);
+    setTimeout(() => b.remove(), 10000);
+  }
+}
+function dropGiftsFromTop() {
+  for (let i = 0; i < 6; i++) {
+    const g = document.createElement('div');
+    g.className = 'drop-gift';
+    g.style.left = Math.random() * 100 + 'vw';
+    g.style.animationDuration = 4 + Math.random() * 3 + 's';
+    document.getElementById('effect-container').appendChild(g);
+    setTimeout(() => g.remove(), 7000);
+  }
+}
+launchConfetti();
+launchBalloons();
+dropGiftsFromTop();
+
+const effectContainer = document.getElementById('effect-container');
+for (let i = 0; i < 15; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.top = Math.random() * 60 + 'px';
+  s.style.left = Math.random() * 100 + 'vw';
+  effectContainer.appendChild(s);
+}
+
+setInterval(() => {
+  launchConfetti();
+  launchBalloons();
+  dropGiftsFromTop();
+}, 6000); 
+</script>
 </body>
 </html>
