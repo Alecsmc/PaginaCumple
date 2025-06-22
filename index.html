@@ -7,145 +7,84 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box }
     html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      width: 100%; height: 100%; overflow: hidden;
       font-family: sans-serif;
       touch-action: none;
     }
-
     body {
       position:relative;
       background:
         linear-gradient(135deg,#FFE5EC 0%,#FFF1E0 50%,#E0F7FA 100%),
         repeating-linear-gradient(45deg,rgba(255,255,255,0.1) 0 10px,transparent 10px 20px);
     }
-
     #birthday-title {
-      position:absolute; top:20px; left:50%;
-      transform:translateX(-50%);
-      background:rgba(255,255,255,0.8);
-      padding:8px 16px; border-radius:8px; z-index:5;
-      font-size:2.2rem;
+      position:absolute; top:20px; left:50%; transform:translateX(-50%);
+      background:rgba(255,255,255,0.8); padding:8px 16px;
+      border-radius:8px; z-index:5; font-size:2.2rem;
       animation:colorChange 6s linear infinite;
     }
-
     @keyframes colorChange {
-      0%{color:#FF6384}25%{color:#36A2EB}50%{color:#4BC0C0}
-      75%{color:#9966FF}100%{color:#FFCE56}
+      0%{color:#FF6384}25%{color:#36A2EB}50%{color:#4BC0C0}75%{color:#9966FF}100%{color:#FFCE56}
     }
-
     #bunting {
-      position:absolute; top:80px; left:50%;
-      transform:translateX(-50%); display:flex; gap:6px; z-index:3;
+      position:absolute; top:80px; left:50%; transform:translateX(-50%);
+      display:flex; gap:6px; z-index:3;
     }
-
     .flag {
-      width:0; height:0;
-      border-left:14px solid transparent;
+      width:0; height:0; border-left:14px solid transparent;
       border-right:14px solid transparent;
       border-bottom:24px solid var(--clr);
     }
-
     #balloon-bg {
       position:absolute; top:0; left:0;
-      width:100%; height:100%;
+      width:100%; height:100%; opacity:0.5;
       background:url('assets/balloon_bg_pastel.png') no-repeat center bottom;
-      background-size:cover; opacity:0.5; z-index:0;
+      background-size:cover; z-index:0;
     }
-
     #scene {
-      position:absolute;
-      bottom:80px;
-      left:50%;
-      transform:translateX(-50%);
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 2 / 1;
-      overflow:hidden;
+      position:absolute; bottom:80px; left:50%; transform:translateX(-50%);
+      width:100%; max-width:800px; aspect-ratio: 2 / 1; overflow:hidden;
     }
-
     #gameCanvas {
-      position:absolute;
-      top:0; left:0;
-      width: 100%; height: 100%;
-      background:
-        url('assets/church_bg.png') no-repeat center bottom,
-        rgba(255,255,255,0.7);
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      background:url('assets/church_bg.png') no-repeat center bottom, rgba(255,255,255,0.7);
       background-size:cover;
-      border:2px solid #FFC0CB;
-      border-radius:12px;
-      z-index:1;
+      border:2px solid #FFC0CB; border-radius:12px; z-index:1;
     }
-
     #snoopy-wait {
-      position:absolute;
-      bottom:0; right:10px;
-      image-rendering:pixelated;
-      z-index:2;
+      position:absolute; bottom:0; right:10px;
+      image-rendering:pixelated; z-index:2;
       transform:scaleX(-1);
-      animation:
-        anxiousBounce 1s ease-in-out infinite,
-        flicker       0.2s infinite alternate;
+      animation:anxiousBounce 1s ease-in-out infinite, flicker 0.2s infinite alternate;
     }
-
     @keyframes anxiousBounce {
       0%,100% { transform: scaleX(-1) translateY(0); }
       50%     { transform: scaleX(-1) translateY(-6px); }
     }
-
     @keyframes flicker {
       0%{filter:brightness(1)}50%{filter:brightness(1.4)}100%{filter:brightness(1)}
     }
-
     #touch-controls {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      display: flex;
-      gap: 20px;
+      position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
+      z-index:9999; display:flex; gap:20px;
     }
-
     #touch-controls button {
-      font-size: 2rem;
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: none;
-      background-color: rgba(255,255,255,0.9);
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
+      font-size:2rem; padding:10px 20px; border-radius:12px; border:none;
+      background-color:rgba(255,255,255,0.9);
+      box-shadow:2px 2px 6px rgba(0,0,0,0.3);
+      cursor:pointer; user-select:none;
     }
-
     #final-screen {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #fffdf2;
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      display:none; position:fixed; top:0; left:0;
+      width:100vw; height:100vh; background:#fffdf2;
+      z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;
+      flex-direction: column;
     }
-
-    #final-screen img {
-      max-width: 100%;
-      max-height: 100vh;
-      width: auto;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    #final-toggle-img {
+      max-width: 100%; max-height: 90vh; border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4); cursor: pointer;
     }
-
-    #music { display:none }
   </style>
 </head>
 <body>
@@ -158,75 +97,62 @@
     <div class="flag" style="--clr:#9966FF"></div>
   </div>
   <h1 id="birthday-title">¡Feliz Cumpleaños, Sheryl!</h1>
-
   <div id="scene">
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     <img id="snoopy-wait" src="snoopy_cake_wait.png" alt="Snoopy esperando">
   </div>
-
   <div id="touch-controls">
     <button id="left-btn" tabindex="-1">⬅️</button>
     <button id="right-btn" tabindex="-1">➡️</button>
   </div>
-
   <div id="final-screen">
-    <img src="final_card.png" alt="Feliz cumpleaños Sheryl">
+    <img id="final-toggle-img" src="final_card.png" alt="Feliz cumple">
   </div>
-
-  <audio id="music" src="birthday_song.mp3" autoplay loop></audio>
-
   <script>
-    const canvas       = document.getElementById('gameCanvas'),
-          ctx          = canvas.getContext('2d'),
-          snoopyImgEl  = document.getElementById('snoopy-wait'),
-          finalScreen  = document.getElementById('final-screen'),
-          FLOOR_H      = 30;
+    const canvas = document.getElementById('gameCanvas'),
+          ctx = canvas.getContext('2d'),
+          snoopyImgEl = document.getElementById('snoopy-wait'),
+          finalScreen = document.getElementById('final-screen'),
+          toggleImg = document.getElementById('final-toggle-img'),
+          FLOOR_H = 30;
 
     ctx.imageSmoothingEnabled = false;
-
     const sherylSprite = new Image();
-    sherylSprite.src   = 'sheryl_sprite_6frames_finalclean.png';
-
-    const FRAMES       = 6;
-    let frameW, frameH,
-        x = 0, y = 0,
+    sherylSprite.src = 'sheryl_sprite_6frames_finalclean.png';
+    const FRAMES = 6;
+    let frameW, frameH, x = 0, y = 0,
         frame = 0, lastTS = 0,
         stopped = false,
-        direction = 1;
+        direction = 1,
+        SPEED = 2,
+        snoopyWidth,
+        currentImage = 0;
 
-    const SPEED         = 2;
-    const keys          = { ArrowLeft:false, ArrowRight:false };
-    const collisionMargin = 10;
-    let snoopyWidth;
+    const keys = { ArrowLeft:false, ArrowRight:false };
 
     document.addEventListener('keydown', e => {
-      if (e.key==='ArrowLeft')  keys.ArrowLeft  = true, direction = -1;
-      if (e.key==='ArrowRight') keys.ArrowRight = true, direction =  1;
+      if (e.key==='ArrowLeft') keys.ArrowLeft = true, direction = -1;
+      if (e.key==='ArrowRight') keys.ArrowRight = true, direction = 1;
     });
-
     document.addEventListener('keyup', e => {
-      if (e.key==='ArrowLeft')  keys.ArrowLeft  = false;
+      if (e.key==='ArrowLeft') keys.ArrowLeft = false;
       if (e.key==='ArrowRight') keys.ArrowRight = false;
     });
-
     document.getElementById('left-btn').addEventListener('touchstart', () => keys.ArrowLeft = true);
-    document.getElementById('left-btn').addEventListener('touchend',   () => keys.ArrowLeft = false);
+    document.getElementById('left-btn').addEventListener('touchend', () => keys.ArrowLeft = false);
     document.getElementById('right-btn').addEventListener('touchstart', () => keys.ArrowRight = true);
-    document.getElementById('right-btn').addEventListener('touchend',   () => keys.ArrowRight = false);
+    document.getElementById('right-btn').addEventListener('touchend', () => keys.ArrowRight = false);
 
     sherylSprite.onload = () => {
       frameW = sherylSprite.width / FRAMES;
       frameH = sherylSprite.height;
-      y      = canvas.height - FLOOR_H - frameH;
-
+      y = canvas.height - FLOOR_H - frameH;
       snoopyImgEl.style.height = frameH + 'px';
-      snoopyImgEl.style.width  = 'auto';
-      finalScreen.style.display = 'none'; // 🔐 asegúrate de que empiece oculto
-
+      snoopyImgEl.style.width = 'auto';
+      finalScreen.style.display = 'none';
       setTimeout(() => {
         snoopyWidth = snoopyImgEl.offsetWidth / (canvas.offsetWidth / canvas.width);
       }, 50);
-
       requestAnimationFrame(loop);
     };
 
@@ -238,52 +164,39 @@
       finalScreen.style.display = 'flex';
     }
 
+    toggleImg.addEventListener('click', () => {
+      currentImage = (currentImage + 1) % 2;
+      toggleImg.src = currentImage === 0 ? 'final_card.png' : 'final_card_2.png';
+    });
+
     function loop(ts) {
       if (!lastTS) lastTS = ts;
       const delta = ts - lastTS;
-
       if (delta > 150 && (keys.ArrowLeft || keys.ArrowRight) && !stopped) {
         frame = (frame + 1) % FRAMES;
         lastTS = ts;
       }
-
       if (!stopped) {
-        if (keys.ArrowRight && x + frameW < canvas.width - snoopyWidth - collisionMargin) {
-          x += SPEED;
-        }
-        if (keys.ArrowLeft && x > 0) {
-          x -= SPEED;
-        }
+        if (keys.ArrowRight && x + frameW < canvas.width - snoopyWidth - 10) x += SPEED;
+        if (keys.ArrowLeft && x > 0) x -= SPEED;
       }
-
-      if (!stopped && x + frameW >= canvas.width - snoopyWidth - collisionMargin) {
+      if (!stopped && x + frameW >= canvas.width - snoopyWidth - 10) {
         stopped = true;
         showFinalScreen();
         return;
       }
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#8B4513';
       ctx.fillRect(0, canvas.height - FLOOR_H, canvas.width, FLOOR_H);
-
       ctx.save();
       if (direction === -1) {
         ctx.translate(x + frameW, 0);
         ctx.scale(-1, 1);
-        ctx.drawImage(
-          sherylSprite,
-          frame * frameW, 0, frameW, frameH,
-          0, y, frameW, frameH
-        );
+        ctx.drawImage(sherylSprite, frame * frameW, 0, frameW, frameH, 0, y, frameW, frameH);
       } else {
-        ctx.drawImage(
-          sherylSprite,
-          frame * frameW, 0, frameW, frameH,
-          x, y, frameW, frameH
-        );
+        ctx.drawImage(sherylSprite, frame * frameW, 0, frameW, frameH, x, y, frameW, frameH);
       }
       ctx.restore();
-
       requestAnimationFrame(loop);
     }
   </script>
